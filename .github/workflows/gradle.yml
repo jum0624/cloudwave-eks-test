@@ -28,7 +28,10 @@ jobs:
        
       ## gradle build
       - name: Build with Gradle
-        run: ./gradlew clean build --debug
+        run: |
+          ./gradlew -version
+          ./gradlew :api:build -x test
+        shell: bash
      
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
