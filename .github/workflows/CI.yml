@@ -21,29 +21,29 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          
+
       ## gradlew 의 권한을 줍니다.
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-       
+
       ## gradle build
       - name: Build with Gradle
         run: |
           ./gradlew -version
           ./gradlew build -x test
         shell: bash
-     
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}          # 나의 ECR 정보
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
-          
+
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-  
+
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
         env:
@@ -56,3 +56,17 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG xinfra/docker/.
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+      - name: change image tag
+        run: |
+          cd ./xinfra/kustomize
+          kustomize edit set image image=$ECR_REGISTRY/$ECR_REPOSITORY:v$IMAGE_TAG
+          cat ./kustomization.yml
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.email jum0624@naver.com
+          git config --global user.name "jum0624"
+          git add .
+          git commit -m "Update image tags for cloudladder project"
+          git push --prune https://token:${{ secrets.GIT_TOKEN }}@github.com/jum0624/cloudwave-eks-test.git
