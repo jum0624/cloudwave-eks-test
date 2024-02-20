@@ -25,7 +25,7 @@ spec:
                   key: MYSQL_PASSWORD
           command: [ 'sh',
                      '-c',
-                     'until mysqladmin ping -u admin -p${MYSQL_PASSWORD} -h istory.cjayaai6sngi.ap-northeast-2.rds.amazonaws.com; do echo waiting for database; sleep 2; done;' ]
+                     'until mysqladmin ping -u cloudwave -p${MYSQL_PASSWORD} -h cloudladder.cpq62cq0yvqi.ap-northeast-2.rds.amazonaws.com; do echo waiting for database; sleep 2; done;' ]
 
       containers:
         - name:  istory
