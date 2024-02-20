@@ -57,10 +57,24 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
+        # kustomize 명령 가져오기
+      - name: Setup Kustomize
+        uses: imranismail/setup-kustomize@v1
+
+      - name: Checkout kustomize repository
+        uses: actions/checkout@v2
+        with:
+          # kubernetes 설정정보 저장소
+          repository: jum0624/gitOps  # argo가 관찰할 repo
+          ref: main  # branch
+          # 다른 저장소에 push 하려면 Personal Access Token이 필요함
+          token: ${{ secrets.GIT_TOKEN }}
+          path: gitOps # repo와 같은 이름으로 root 디렉토리 설정
+
       - name: change image tag
         run: |
-          cd ./xinfra/kustomize/base
-          kustomize edit set image image=$ECR_REGISTRY/$ECR_REPOSITORY:v$IMAGE_TAG
+          cd xinfra/kustomize
+          kustomize edit set image $ECR_REGISTRY/$ECR_REPOSITORY:v$IMAGE_TAG
           cat ./kustomization.yaml
 
       - name: Commit and Push Changes
@@ -69,4 +83,4 @@ jobs:
           git config --global user.name "jum0624"
           git add .
           git commit -m "Update image tags for cloudladder project"
-          git push --prune https://token:${{ secrets.GIT_TOKEN }}//github.com/jum0624/gitOps.git
+          git push -u origin main
