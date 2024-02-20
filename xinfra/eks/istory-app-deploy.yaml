@@ -14,19 +14,6 @@ spec:
       labels:
         app:  istory
     spec:
-      initContainers:
-        - name: check-mysql-ready
-          image: mysql:8.0
-          env:
-            - name: MYSQL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: istory-db-secret
-                  key: MYSQL_PASSWORD
-          command: [ 'sh',
-                     '-c',
-                     'until mysqladmin ping -u cloudwave -p${MYSQL_PASSWORD} -h cloudladder.cpq62cq0yvqi.ap-northeast-2.rds.amazonaws.com; do echo waiting for database; sleep 2; done;' ]
-
       containers:
         - name:  istory
           image:  553823310165.dkr.ecr.ap-northeast-2.amazonaws.com/cloudladder-repo:f249e9145253946c99d896ad62277ecd02fa00ce
