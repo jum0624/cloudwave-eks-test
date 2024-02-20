@@ -84,4 +84,4 @@ jobs:
           git config --global user.name "jum0624"
           git add .
           git commit -m "Update image tags for cloudladder project"
-          git push -u origin main
+          git push --prune https://token:${{ secrets.GIT_TOKEN }}@github.com/jum0624/gitOps.git
