@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/istory
-    username: eunmi
-    password: admin123
+    url: jdbc:mysql://cloudladder.cpq62cq0yvqi.ap-northeast-2.rds.amazonaws.com:3306/istory
+    username: cloudwave
+    password: qwer1234
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
