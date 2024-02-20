@@ -79,7 +79,7 @@ jobs:
 
       - name: Commit and Push Changes
         run: |
-          git config --global user.email jum0624@naver.com
+          git config --global user.email "jum0624@naver.com"
           git config --global user.name "jum0624"
           git add .
           git commit -m "Update image tags for cloudladder project"
