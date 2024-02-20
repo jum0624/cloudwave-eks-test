@@ -29,7 +29,7 @@ spec:
 
       containers:
         - name:  istory
-          image:  553823310165.dkr.ecr.ap-northeast-2.amazonaws.com/cloudladder-repo:5bd0e122603ea40e441b76fa707c13c1238c007d
+          image:  553823310165.dkr.ecr.ap-northeast-2.amazonaws.com/cloudladder-repo:f249e9145253946c99d896ad62277ecd02fa00ce
           envFrom:
             - configMapRef:
                 name: istory-app-config
