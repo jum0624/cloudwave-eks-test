@@ -75,7 +75,7 @@ jobs:
         run: |
           pwd
           cd xinfra/kustomize/base
-          kustomize edit set image $ECR_REGISTRY/$ECR_REPOSITORY:v$IMAGE_TAG
+          kustomize edit set image cicd-image=$ECR_REGISTRY/$ECR_REPOSITORY:v$IMAGE_TAG
           cat ./kustomization.yaml
 
       - name: Commit and Push Changes
