@@ -73,7 +73,7 @@ jobs:
 
       - name: change image tag
         run: |
-          cd xinfra/kustomize
+          cd xinfra/kustomize/base
           kustomize edit set image $ECR_REGISTRY/$ECR_REPOSITORY:v$IMAGE_TAG
           cat ./kustomization.yaml
 
