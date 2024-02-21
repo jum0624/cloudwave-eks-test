@@ -55,7 +55,7 @@ jobs:
           # be deployed to ECS.
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG xinfra/docker/.
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          echo "::save-state name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
         # kustomize 명령 가져오기
       - name: Setup Kustomize
@@ -80,6 +80,7 @@ jobs:
 
       - name: Commit and Push Changes
         run: |
+          cd gitOps
           git config --global user.email "jum0624@naver.com"
           git config --global user.name "jum0624"
           git add .
