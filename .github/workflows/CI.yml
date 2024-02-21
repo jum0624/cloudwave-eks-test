@@ -75,7 +75,7 @@ jobs:
         run: |
           pwd
           cd gitOps/kustomize/overlay/dev
-          kustomize edit set image $ECR_REGISTRY/$ECR_REPOSITORY:v$IMAGE_TAG
+          kustomize edit set image $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           cat ./kustomization.yaml
 
       - name: Commit and Push Changes
